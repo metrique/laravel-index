@@ -1,0 +1,20 @@
+{
+    "name": "metrique/laravel-index",
+    "description": "Create and manage a tiered navigation index.",
+    "type": "Library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Hudson",
+            "email": "support@shinobicorp.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Metrique\\Index\\": "src/"
+        }
+    },
+    "require-dev": {
+        "laravel/framework": "^5.1"
+    }
+}
