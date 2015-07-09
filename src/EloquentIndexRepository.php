@@ -38,15 +38,36 @@ class EloquentIndexRepository extends EloquentAbstractRepository implements Inde
         $index = $this->findTypes($types);
         $indexMap = [];
 
-        foreach ($index as $key => $value) {
-
-            // Map the database 'id' to the model key.
+        foreach($index as $key => $value)
+        {
+            // Map the database Id to the array Id
             $indexMap[$value['id']] = $key;
 
-            // Create the children container.
+            // Initialise children.
             $index[$key]['children'] = [];
         }
 
-        return $index;
+        foreach($index as $key => $value)
+        {
+            $indicesId = $index[$key]['indices_id'];
+            
+            // Add any root items to the nested array.
+            if(is_null($indicesId))
+            {
+                $nested[] = &$index[$key];
+            }
+
+            // Add any child items to their parent.
+            if(!is_null($indicesId))
+            {
+                // Get the the array Id of the parent from the Index map.
+                $indexId = $indexMap[$indicesId];
+                
+                // Add the child to the parent.
+                $index[$indexId]['children'][] = &$index[$key];
+            }
+        }
+
+        return $nested;
     }
 }
