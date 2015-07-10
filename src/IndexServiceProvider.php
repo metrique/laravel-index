@@ -5,7 +5,8 @@ namespace Metrique\Index;
 use Illuminate\Support\ServiceProvider;
 use Metrique\Index\Commands\IndexMigrationsCommand;
 use Metrique\Index\Contracts\IndexRepositoryInterface;
-use Metrique\Index\EloquentIndexRepository;
+use Metrique\Index\IndexRepositoryCache;
+use Metrique\Index\IndexRepositoryEloquent;
 
 class IndexServiceProvider extends ServiceProvider
 {
@@ -43,7 +44,12 @@ class IndexServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             IndexRepositoryInterface::class,
-            EloquentIndexRepository::class
+            function($app){
+                return new IndexRepositoryCache(
+                    new IndexRepositoryEloquent($app),
+                    $app->make('Illuminate\Cache\Repository')
+                );
+            }
         );
     }
 

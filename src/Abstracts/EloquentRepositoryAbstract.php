@@ -12,7 +12,7 @@ use Metrique\Index\Contracts\EloquentRepositoryInterface;
  *
  * 
  */
-abstract class EloquentAbstractRepository implements EloquentRepositoryInterface {
+abstract class EloquentRepositoryAbstract implements EloquentRepositoryInterface {
     
     protected $model;
     protected $modelClassName;
@@ -33,12 +33,12 @@ abstract class EloquentAbstractRepository implements EloquentRepositoryInterface
         return $this;
     }
 
-    public function all($columns = ['*'])
+    public function all(array $columns = ['*'])
     {
         return $this->model->all($columns);
     }
 
-    public function paginate($perPage = 10, $columns = ['*'])
+    public function paginate($perPage = 10, array $columns = ['*'])
     {
         return $this->model->paginate($perPage, $columns);
     }
@@ -53,7 +53,7 @@ abstract class EloquentAbstractRepository implements EloquentRepositoryInterface
         return $this->model->find($id)->update($data);
     }
 
-    public function find($id, $columns = ['*'])
+    public function find($id, array $columns = ['*'])
     {
         return $this->model->find($id, $columns);
     }
