@@ -7,6 +7,23 @@ use Metrique\Index\Contracts\EloquentRepositoryInterface;
 interface IndexRepositoryInterface extends EloquentRepositoryInterface
 {
     /**
+     * Set the namespace, enables multiple navigations.
+     * 
+     * @param string|null $namespace
+     * @return $this
+     */
+    public function setNamespace($namespace = null);
+
+    /**
+     * Sets the default ordering.
+     * 
+     * @param string $column
+     * @param string $order
+     * @return $this
+     */
+    public function setOrder($column = 'order', $order = 'desc');
+
+    /**
      * Find index entries by a key/value pair array.
      * 
      * Keys can be 'disabled', 'navigation', 'published'.
