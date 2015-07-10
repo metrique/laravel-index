@@ -7,10 +7,10 @@ namespace Metrique\Index\Contracts;
  * functions to be expected of any eloquent repository.
  */
 interface EloquentRepositoryInterface { 
-    public function all($columns = ['*']);
-    public function paginate($perPage = 10, $columns = ['*']);
+    public function all(array $columns = ['*']);
+    public function paginate($perPage = 10, array $columns = ['*']);
     public function create(array $data);
     public function update($id, array $data);
-    public function find($id, $columns = ['*']);
+    public function find($id, array $columns = ['*']);
     public function destroy($id);
 }
