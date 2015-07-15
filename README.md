@@ -27,9 +27,7 @@ Create and manage a 2 tier navigation index in Laravel 5.
 
 `setOrder($column = 'order', $order = 'desc')` Sets the default ordering.
 
-`findTypes(array $types)`
-
-Find index entries of a certain type, by a key/value pair array.
+`findTypes(array $types)` Find index entries of a certain type, by a key/value pair array.
 
 Keys can be 'disabled', 'navigation', 'published'.
 Values can be null, true or false, and are set to null by default.
