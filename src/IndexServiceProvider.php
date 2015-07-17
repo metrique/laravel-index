@@ -45,10 +45,9 @@ class IndexServiceProvider extends ServiceProvider
         $this->app->singleton(
             IndexRepositoryInterface::class,
             function($app){
-                return new IndexRepositoryCache(
-                    new IndexRepositoryEloquent($app),
-                    $app->make('Illuminate\Cache\Repository')
-                );
+                $eloquent = new IndexRepositoryEloquent($app);
+                $cache = new IndexRepositoryCache($eloquent, $app->make('Illuminate\Cache\Repository'));
+                return $cache;
             }
         );
     }

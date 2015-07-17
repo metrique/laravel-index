@@ -16,99 +16,87 @@ class IndexRepositoryCache implements IndexRepositoryInterface
 
     public function all(array $columns = ['*'])
     {
-        $signature = $this->buildSignature(
-            __FUNCTION__,
-            serialize($columns)
-        );
-
         return $this->repository->all($columns);
     }
 
     public function paginate($perPage = 10, array $columns = ['*'])
     {
-        $signature = $this->buildSignature(
-            __FUNCTION__,
-            serialize([$perPage, $columns])
-        );
-
         return $this->repository->paginate($perPage, $columns);
     }
 
     public function create(array $data)
     {
-        $signature = $this->buildSignature(
-            __FUNCTION__,
-            serialize($date)
-        );
-
         return $this->repository->create($data);
     }
 
     public function update($id, array $data)
     {
-        $signature = $this->buildSignature(
-            __FUNCTION__,
-            serialize([$id, $data])
-        );
-
         return $this->repository->update($id, $data);
     }
 
     public function find($id, array $columns = ['*'])
     {
-        $signature = $this->buildSignature(
-            __FUNCTION__,
-            serialize([$id, $columns])
-        );
-
         return $this->repository->find($id, $columns);
     }
 
     public function destroy($id)
     {
-        $signature = $this->buildSignature(
-            __FUNCTION__,
-            $id
-        );
+        return $this->repository->$destroy($id);
+    }
 
-        return $this->repository->$destory($id);
+    public function getNamespace()
+    {
+        return $this->repository->getNamespace();
     }
 
     public function setNamespace($namespace = null)
     {
-        return $this->repository->setNamespace($namespace);
+        $this->repository->setNamespace($namespace);
+
+        return $this;
     }
 
     public function setOrder($column = 'order', $order = 'desc')
     {
-        return $this->repository->setOrder($column, $order);
+        $this->repository->setOrder($column, $order);
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->repository->getSlug();
+    }
+
+    public function setSlug($slug = null)
+    {
+        $this->repository->setSlug($slug);
+
+        return $this;
     }
 
     public function findTypes(array $types)
     {
-        $signature = $this->buildSignature(
+        $signature = $this->buildSignature([
             __FUNCTION__,
-            serialize($types)
-        );
+            $this->getNamespace(),
+            json_encode($types)
+        ]);
 
-        return $this->repository->findTypes($types);
+        return $this->cache->remember($signature, 1, function() use($types) {
+            return $this->repository->findTypes($types);
+        });
     }
 
     public function findAndNestTypes(array $types)
-    {        
-        $signature = $this->buildSignature(
-            __FUNCTION__,
-            serialize($types)
-        );
-        die('hi');
-
-        return $this->repository->findAndNestTypes($types);
+    {
+        return $this->repository->createNestedIndex($this->findTypes($types));
     }
 
     private function buildSignature(array $signature)
     {
         array_unshift($signature, __CLASS__);
 
-        dump($buildSignature);
+        return md5(implode('::', $signature));
     }
 }

@@ -4,13 +4,16 @@ namespace Metrique\Index;
 
 use Metrique\Index\Abstracts\EloquentRepositoryAbstract;
 use Metrique\Index\Contracts\IndexRepositoryInterface;
+use Metrique\Index\Traits\IndexArrayTrait;
 
 class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements IndexRepositoryInterface
 {
+    use IndexArrayTrait;
 
     protected $modelClassName = 'Metrique\Index\Eloquent\Index';
     protected $namespace = null;
     protected $order = null;
+    protected $slug = null;
 
     public function all(array $columns = ['*'])
     {
@@ -87,6 +90,14 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
     /**
      * {@inheritdocs}
      */
+    public function getNamespace($namespace = null)
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * {@inheritdocs}
+     */
     public function setNamespace($namespace = null)
     {
         $this->namespace = $namespace;
@@ -103,6 +114,24 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
             'column' => $column,
             'order' => $order,
         ];
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdocs}
+     */
+    public function getSlug($slug = null)
+    {
+        return $this->slug;
+    }
+
+    /**
+     * {@inheritdocs}
+     */
+    public function setSlug($slug = null)
+    {
+        $this->slug = $slug;
 
         return $this;
     }
@@ -143,42 +172,7 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
      */
     public function findAndNestTypes(array $types)
     {
-        $index = $this->findTypes($types);
-        $indexMap = [];
-        $nested = [];
-
-        // Create index map & init children array.
-        foreach($index as $key => $value)
-        {
-            // Map the database Id to the array Id
-            $indexMap[$value['id']] = $key;
-
-            // Initialise children.
-            $index[$key]['children'] = [];
-        }
-
-        foreach($index as $key => $value)
-        {
-            $indicesId = $index[$key]['indices_id'];
-            
-            // Add any root items to the nested array.
-            if(is_null($indicesId))
-            {
-                $nested[] = &$index[$key];
-            }
-
-            // Add any child items to their parent.
-            if(!is_null($indicesId))
-            {
-                // Get the the array Id of the parent from the Index map.
-                $indexId = $indexMap[$indicesId];
-                
-                // Add the child to the parent.
-                $index[$indexId]['children'][] = &$index[$key];
-            }
-        }
-
-        return $nested;
+        return $this->createNestedIndex($this->findTypes($types));
     }
 
     /**

@@ -30,6 +30,7 @@ Create and manage a 2 tier navigation index in Laravel 5.
 `findTypes(array $types)` Find index entries of a certain type, by a key/value pair array.
 
 Keys can be 'disabled', 'navigation', 'published'.
+
 Values can be null, true or false, and are set to null by default.
 
 The following example will pull indices where 'navigation' is set

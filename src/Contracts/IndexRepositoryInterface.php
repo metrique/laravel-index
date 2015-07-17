@@ -7,6 +7,13 @@ use Metrique\Index\Contracts\EloquentRepositoryInterface;
 interface IndexRepositoryInterface extends EloquentRepositoryInterface
 {
     /**
+     * Retrieve the last set namespace.
+     * 
+     * @return string
+     */
+    public function getNamespace();
+
+    /**
      * Set the namespace, for use with multiple navigations systems.
      * 
      * @param string|null $namespace
@@ -22,6 +29,21 @@ interface IndexRepositoryInterface extends EloquentRepositoryInterface
      * @return $this
      */
     public function setOrder($column = 'order', $order = 'desc');
+
+    /**
+     * Retrieve the last set slug.
+     * 
+     * @return string
+     */
+    public function getSlug();
+
+    /**
+     * Sets the slug, used to track which page is active.
+     * 
+     * @param $string $slug
+     * @return $this
+     */
+    public function setSlug($slug = null);
 
     /**
      * Find index entries of a certain type by a key/value pair array.
