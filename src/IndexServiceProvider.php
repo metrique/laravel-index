@@ -17,6 +17,12 @@ class IndexServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        // Config
+        $this->publishes([
+            __DIR__.'/Resources/config/index.php' => config_path('index.php'),
+        ]);
+        
         // Commands
         $this->commands('command.metrique.index-migrations');
 
@@ -45,9 +51,7 @@ class IndexServiceProvider extends ServiceProvider
         $this->app->singleton(
             IndexRepositoryInterface::class,
             function($app){
-                $eloquent = new IndexRepositoryEloquent($app);
-                $cache = new IndexRepositoryCache($eloquent, $app->make('Illuminate\Cache\Repository'));
-                return $cache;
+                return $app->make('Metrique\Index\IndexRepositoryCache');
             }
         );
     }
