@@ -18,11 +18,8 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
     public function all(array $columns = ['*'])
     {
         $model = $this->model->all($columns);
-
-        if(!is_null($this->namespace))
-        {
-            $model = $model->where('namespace', $namespace);
-        }
+        $model = $this->applyNamespace($model);
+        $model = $this->applyOrder($model);
 
         return $model;
     }
@@ -30,11 +27,8 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
     public function paginate($perPage = 10, array $columns = ['*'])
     {
         $model = $this->model->paginate($perPage, $columns);
-
-        if(!is_null($this->namespace))
-        {
-            $model = $model->where('namespace', $namespace);
-        }
+        $model = $this->applyNamespace($model);
+        $model = $this->applyOrder($model);
 
         return $model;
     }
@@ -43,22 +37,12 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
     {
         $model = $this->model->create($data);
 
-        if(!is_null($this->namespace))
-        {
-            $model = $model->where('namespace', $namespace);
-        }
-
         return $model;
     }
 
     public function update($id, array $data)
     {
         $model = $this->model->find($id)->update($data);
-
-        if(!is_null($this->namespace))
-        {
-            $model = $model->where('namespace', $namespace);
-        }
 
         return $model;
     }
@@ -67,22 +51,12 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
     {
         $model = $this->model->find($id, $columns);
 
-        if(!is_null($this->namespace))
-        {
-            $model = $model->where('namespace', $namespace);
-        }
-
         return $model;
     }
 
     public function destroy($id)
     {  
         $model = $this->model->destroy($id);
-
-        if(!is_null($this->namespace))
-        {
-            $model = $model->where('namespace', $namespace);
-        }
 
         return $model;
     }
@@ -172,7 +146,7 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
      */
     public function findAndNestTypes(array $types)
     {
-        return $this->createNestedIndex($this->findTypes($types));
+        return $this->createNestedIndex($this->findTypes($types), ['slug' => $this->slug]);
     }
 
     /**
