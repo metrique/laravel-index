@@ -1,6 +1,6 @@
 # laravel-index
 
-Create and manage a 2 tier navigation index in Laravel 5.
+Create and manage a tiered navigation index in Laravel 5.
 
 ## Installation
 
