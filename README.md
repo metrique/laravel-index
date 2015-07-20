@@ -22,10 +22,15 @@ Create and manage a tiered navigation index in Laravel 5.
 6. `php artisan metrique:index-migrations` to install the migrations to the database/migrations in your application.
 
 ## Usage
+`getNamespace()` Retrieve the last set namespace.
 
 `setNamespace($namespace = null)` Set the namespace, useful where you wish to work with multiple navigations systems.
 
 `setOrder($column = 'order', $order = 'desc')` Sets the default ordering.
+
+`getSlug()` Retrieve the last set slug.
+
+`setSlug($slug = null)` Sets the slug, used to track which page is active.
 
 `findTypes(array $types)` Find index entries of a certain type, by a key/value pair array.
 
