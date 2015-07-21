@@ -57,8 +57,11 @@ trait IndexArrayTrait
                 // Add the child to the parent.
                 $index[$indexId][$options['child_key']][] = &$index[$key];
 
-                // Mark the parent as active
-                $index[$indexId][$options['active_key']] = &$index[$key][$options['active_key']];
+                // If the child is active, also mark the parent as active.
+                if($index[$key][$options['active_key']] === true)
+                {
+                    $index[$indexId][$options['active_key']] = $index[$key][$options['active_key']];
+                }
             }
         }
 
