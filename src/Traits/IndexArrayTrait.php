@@ -31,6 +31,12 @@ trait IndexArrayTrait
             // Initialise active.
             $index[$key][$options['active_key']] = false;
 
+            // Initialise params.
+            if( ! is_null($index[$key]['params']))
+            {
+                $index[$key]['params'] = json_decode($index[$key]['params'], true);
+            }
+
             // Mark as active
             if( ! is_null($options['slug']))
             {

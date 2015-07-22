@@ -13,7 +13,6 @@ class CreateIndices extends Migration
     public function up()
     {
         Schema::create('indices', function(Blueprint $table) {
-
             $table->increments('id');
             $table->text('params');
             $table->integer('order')->unsigned()->default(0);
