@@ -88,6 +88,7 @@ class IndexRepositoryCache implements IndexRepositoryInterface
         $signature = $this->buildSignature([
             __FUNCTION__,
             $this->getNamespace(),
+            $this->getSlug(),
             json_encode($types)
         ]);
 
