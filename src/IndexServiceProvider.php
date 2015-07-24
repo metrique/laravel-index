@@ -37,16 +37,16 @@ class IndexServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerIndex();
+        $this->registerIndexRepository();
         $this->registerCommands();
     }
 
     /**
-     * Register the Index singleton bindings.
+     * Register the IndexRepository singleton bindings.
      *
      * @return void
      */
-    public function registerIndex()
+    public function registerIndexRepository()
     {
         $this->app->singleton(
             IndexRepositoryInterface::class,

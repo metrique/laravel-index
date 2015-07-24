@@ -44,6 +44,7 @@ trait IndexArrayTrait
             }
         }
 
+        // Nest index
         foreach($index as $key => $value)
         {
             $indicesId = $index[$key][$options['parent_key']];
