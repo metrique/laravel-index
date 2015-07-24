@@ -42,7 +42,7 @@ class IndexServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the IndexRepository singleton bindings.
+     * Register the IndexRepository singleton binding.
      *
      * @return void
      */
