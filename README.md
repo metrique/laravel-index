@@ -24,7 +24,7 @@ Create and manage a tiered navigation index in Laravel 5.
 ## Usage
 `getNamespace()` Retrieve the last set namespace.
 
-`setNamespace($namespace = null)` Set the namespace, useful where you wish to work with multiple navigations systems.
+`setNamespace($namespace = null)` Set the namespace, useful where you wish to work with multiple navigation systems.
 
 `setOrder($column = 'order', $order = 'desc')` Sets the default ordering.
 
