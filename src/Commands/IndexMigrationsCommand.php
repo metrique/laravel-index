@@ -16,7 +16,7 @@ class IndexMigrationsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'metrique:index-migrations';
+    protected $signature = 'metrique:migrate-index';
 
     /**
      * The console command description.

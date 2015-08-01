@@ -24,7 +24,7 @@ class IndexServiceProvider extends ServiceProvider
         ]);
         
         // Commands
-        $this->commands('command.metrique.index-migrations');
+        $this->commands('command.metrique.migrate-index');
 
         // Views
         $this->loadViewsFrom(__DIR__.'/Resources/views/', 'metrique-index');
@@ -63,7 +63,7 @@ class IndexServiceProvider extends ServiceProvider
      */
     private function registerCommands()
     {
-        $this->app->bindShared('command.metrique.index-migrations', function ($app) {
+        $this->app->bindShared('command.metrique.migrate-index', function ($app) {
             return new IndexMigrationsCommand();
         });
     }
