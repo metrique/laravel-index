@@ -18,13 +18,13 @@ Create and manage a tiered navigation index in Laravel 5.
 2. Add `"Metrique/laravel-index": "dev-master"` to the require section of your composer.json.
 3. `composer update`
 4. Add `Metrique\Index\IndexServiceProvider::class,` to your list of service providers. in `config/app.php`.
-5. `php artisan metrique:index-migrations` to install the migrations to the database/migrations in your application.
+5. `php artisan metrique:migrate-index` to install the migrations to the database/migrations in your application.
 
 ### Config
 
 Config defaults can be configured by editing `config/index.php` in your main application directory.
 
-You can publish the  `config/index.php` config file to your application config directory by running `php artisan vendor:publish`
+You can publish the  `config/index.php` config file to your application config directory by running `php artisan vendor:publish --tag="index-config"`
 
 ## Usage
 

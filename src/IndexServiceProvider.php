@@ -21,7 +21,7 @@ class IndexServiceProvider extends ServiceProvider
         // Config
         $this->publishes([
             __DIR__.'/Resources/config/index.php' => config_path('index.php'),
-        ]);
+        ], 'index-config');
         
         // Commands
         $this->commands('command.metrique.migrate-index');
@@ -64,7 +64,7 @@ class IndexServiceProvider extends ServiceProvider
     private function registerCommands()
     {
         $this->app->bindShared('command.metrique.migrate-index', function ($app) {
-            return new IndexMigrationsCommand();
+            return new IndexMigrationsCommand;
         });
     }
 }
