@@ -3,7 +3,6 @@
 namespace Metrique\Index;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Contracts\Config\Repository as Config;
 use Metrique\Index\Abstracts\EloquentRepositoryAbstract;
 use Metrique\Index\Contracts\IndexRepositoryInterface;
 
@@ -12,13 +11,11 @@ use Metrique\Index\Contracts\IndexRepositoryInterface;
 class IndexRepositoryCache implements IndexRepositoryInterface
 {
     private $cache;
-    private $config;
     private $repository;
 
-    public function __construct(IndexRepositoryEloquent $repository, Cache $cache, Config $config)
+    public function __construct(IndexRepositoryEloquent $repository, Cache $cache)
     {
         $this->cache = $cache;
-        $this->config = $config;
         $this->repository = $repository;
     }
 
@@ -92,7 +89,7 @@ class IndexRepositoryCache implements IndexRepositoryInterface
             json_encode($types)
         ]);
 
-        return $this->cache->remember($signature, $this->config->get('index.cdn.ttl', 5), function() use($types) {
+        return $this->cache->remember($signature, config('index.cdn.ttl', 5), function() use($types) {
             return $this->repository->findTypes($types);
         });
     }

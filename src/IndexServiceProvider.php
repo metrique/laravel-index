@@ -17,6 +17,7 @@ class IndexServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__.'/Resources/views/', 'metrique-index');
 
         // Config
         $this->publishes([
@@ -25,9 +26,6 @@ class IndexServiceProvider extends ServiceProvider
         
         // Commands
         $this->commands('command.metrique.migrate-index');
-
-        // Views
-        $this->loadViewsFrom(__DIR__.'/Resources/views/', 'metrique-index');
     }
 
     /**
