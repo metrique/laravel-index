@@ -6,11 +6,14 @@ trait IndexArrayTrait
 {
     public function createNestedIndex(array $index, array $options = [])
     {
+        $activeScan = true;
+
         $defaults = [
             'active_key' => 'active',
+            'active_scan' => true,
             'parent_key' => 'indices_id',
             'child_key' => 'children',
-            'slug' => null
+            'slug' => null,
         ];
 
         $options = array_intersect_key($options, $defaults);
@@ -40,7 +43,25 @@ trait IndexArrayTrait
             // Mark as active
             if( ! is_null($options['slug']))
             {
-                $index[$key][$options['active_key']] = ($options['slug'] == $index[$key]['slug']) ? true : false;
+                $active = ($options['slug'] == $index[$key]['slug']) ? true : false;
+                $index[$key][$options['active_key']] = $active;
+
+                // Catch if we need to perform an active scan.
+                if($active) {
+                    $activeScan = false;
+                }
+            }
+        }
+
+        // Active Scan - if no slug is marked as active, we scan the first section of the slug.
+        if( ! is_null($options['slug']))
+        {
+            $slug = explode('_', $options['slug'], 2);
+            
+            foreach($index as $key => $value)
+            {
+                $active = ($slug[0] == $index[$key]['slug']) ? true : false;
+                $index[$key][$options['active_key']] = $active;
             }
         }
 
