@@ -73,4 +73,13 @@ interface IndexRepositoryInterface extends EloquentRepositoryInterface
      * @return array
      */
     public function findAndNestTypes(array $types);
+
+    /**
+     * Override active index entry.
+     * 
+     * @param  array  $index
+     * @return array
+     */
+    public function overrideActiveItem(array $index, array $item);
+
 }

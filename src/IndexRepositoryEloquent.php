@@ -149,6 +149,20 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
         return $this->createNestedIndex($this->findTypes($types), ['slug' => $this->slug]);
     }
 
+    public function overrideActiveItem(array $index, array $item)
+    {
+        foreach($index as $key => $value)
+        {
+            if($value['active'])
+            {
+                $index[$key] = array_merge($index[$key], $item);
+                break;
+            }
+        }
+
+        return $index;
+    }
+
     /**
      * Helper function to apply namespace filters.
      */

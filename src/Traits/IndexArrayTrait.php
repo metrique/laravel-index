@@ -7,7 +7,6 @@ trait IndexArrayTrait
     public function createNestedIndex(array $index, array $options = [])
     {
         $activeScan = true;
-
         $defaults = [
             'active_key' => 'active',
             'active_scan' => true,
