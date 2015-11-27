@@ -103,6 +103,11 @@ class IndexRepositoryCache implements IndexRepositoryInterface
     {
         return $this->repository->markAskActive($types, $slug);
     }
+    
+    public function overrideActiveItem(array $index, array $item)
+    {
+        return $this->repository->overrideActiveItem($index, $item);
+    }
 
     private function buildSignature(array $signature)
     {
