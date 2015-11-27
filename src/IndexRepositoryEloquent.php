@@ -150,6 +150,14 @@ class IndexRepositoryEloquent extends EloquentRepositoryAbstract implements Inde
     }
 
     /**
+     * {@inheritdocs}
+     */
+    public function markAsActive(array $types, $slug)
+    {
+        return $types;
+    }
+
+    /**
      * Helper function to apply namespace filters.
      */
     private function applyNamespace($model)

@@ -69,8 +69,28 @@ interface IndexRepositoryInterface extends EloquentRepositoryInterface
      * Find index entries by a key/value pair array
      * Returns a nested array where there are sub indexes.
      * 
+     * Keys can be 'disabled', 'navigation', 'published'.
+     * Values can be null, true or false, and are set to null by default.
+     *
+     * The following example will pull indices where 'navigation' is set
+     * to false and 'published' is set to true only, it will ignore disabled.
+     * 
+     * findAndNestTypes([
+     *     'disabled' => null,
+     *     'navigation' => false,
+     *     'published' => true,
+     * ]);
+     * 
      * @param  array  $types
      * @return array
      */
     public function findAndNestTypes(array $types);
+
+    /**
+     * Find entries that match a specific slug.
+     * @param  array  $types
+     * @param  string $slug
+     * @return array
+     */
+    public function markAsActive(array $types, $slug);
 }

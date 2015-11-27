@@ -99,6 +99,11 @@ class IndexRepositoryCache implements IndexRepositoryInterface
         return $this->repository->createNestedIndex($this->findTypes($types), ['slug' => $this->getSlug()]);
     }
 
+    public function markAsActive(array $types, $slug)
+    {
+        return $this->repository->markAskActive($types, $slug);
+    }
+
     private function buildSignature(array $signature)
     {
         array_unshift($signature, __CLASS__);
