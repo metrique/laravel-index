@@ -93,7 +93,8 @@ interface IndexRepositoryInterface extends EloquentRepositoryInterface
      * @return array
      */
     public function markAsActive(array $types, $slug);
-
+    
+    /**
      * Override active index entry.
      * 
      * @param  array  $index
