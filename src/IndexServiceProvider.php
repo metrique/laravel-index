@@ -5,15 +5,10 @@ namespace Metrique\Index;
 use Illuminate\Support\ServiceProvider;
 use Metrique\Index\Commands\IndexMigrationsCommand;
 use Metrique\Index\Contracts\IndexRepositoryInterface;
-use Metrique\Index\IndexRepositoryCache;
-use Metrique\Index\IndexRepositoryEloquent;
-
 class IndexServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -23,15 +18,13 @@ class IndexServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Resources/config/index.php' => config_path('index.php'),
         ], 'index-config');
-        
+
         // Commands
         $this->commands('command.metrique.migrate-index');
     }
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -41,14 +34,12 @@ class IndexServiceProvider extends ServiceProvider
 
     /**
      * Register the IndexRepository singleton binding.
-     *
-     * @return void
      */
     public function registerIndexRepository()
     {
         $this->app->singleton(
             IndexRepositoryInterface::class,
-            function($app){
+            function ($app) {
                 return $app->make('Metrique\Index\IndexRepositoryCache');
             }
         );
@@ -56,13 +47,11 @@ class IndexServiceProvider extends ServiceProvider
 
     /**
      * Register the artisan commands.
-     *
-     * @return void
      */
     private function registerCommands()
     {
-        $this->app->bindShared('command.metrique.migrate-index', function ($app) {
-            return new IndexMigrationsCommand;
+        $this->app->singleton('command.metrique.migrate-index', function ($app) {
+            return new IndexMigrationsCommand();
         });
     }
 }
